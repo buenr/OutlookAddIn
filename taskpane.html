@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Email Response Add-in</title>
+
+    <!-- Office JavaScript API -->
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
+    <script type="text/javascript" src="src/app.js"></script>
+
+    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui -->
+    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 10px;
+        }
+        .ms-Button {
+            margin-top: 20px;
+            line-height: 20px;
+            padding: 10px 20px;
+            background-color: #0078d4;
+            border: none;
+            border-radius: 2px;
+            color: white;
+            cursor: pointer;
+        }
+        .ms-Button:hover {
+            background-color: #106ebe;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="content-main">
+        <div class="padding">
+            <h2>Insert API Response</h2>
+            <p>Click the button below to insert the API response into your email.</p>
+            <button class="ms-Button" id="insert-response">Insert Response</button>
+        </div>
+    </div>
+
+    <script>
+        Office.onReady((info) => {
+            if (info.host === Office.HostType.Outlook) {
+                document.getElementById("insert-response").onclick = insertEmailResponse;
+            }
+        });
+    </script>
+</body>
+</html>
