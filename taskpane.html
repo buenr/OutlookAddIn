@@ -1,55 +1,48 @@
+<!-- Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT License. -->
 <!DOCTYPE html>
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Email Response Add-in</title>
-
     <!-- Office JavaScript API -->
-    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1.1/hosted/office.js"></script>
-    <script type="text/javascript" src="src/app.js"></script>
-
-    <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui -->
-    <link rel="stylesheet" href="https://static2.sharepointonline.com/files/fabric/office-ui-fabric-core/11.0.0/css/fabric.min.css"/>
-
-    <style>
-        body {
-            margin: 0;
-            padding: 10px;
-        }
-        .ms-Button {
-            margin-top: 20px;
-            line-height: 20px;
-            padding: 10px 20px;
-            background-color: #0078d4;
-            border: none;
-            border-radius: 2px;
-            color: white;
-            cursor: pointer;
-        }
-        .ms-Button:hover {
-            background-color: #106ebe;
-        }
-    </style>
+    <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
 </head>
 
 <body>
-    <div id="content-main">
-        <div class="padding">
-            <h2>Insert API Response</h2>
-            <p>Click the button below to insert the API response into your email.</p>
-            <button class="ms-Button" id="insert-response">Insert Response</button>
-        </div>
-    </div>
+    <p>This add-in will insert the text 'Hello world!' in a new message.</p>
+    <button id="helloButton">Say hello</button>
 
-    <script>
-        Office.onReady((info) => {
-            if (info.host === Office.HostType.Outlook) {
-                document.getElementById("insert-response").onclick = insertEmailResponse;
-            }
-        });
-    </script>
+    <!-- The following image URL tracks diagnostic data for this sample add-in. Please remove the image tag if you reuse this sample in your own code project. -->
+    <img src="https://pnptelemetry.azurewebsites.net/pnp-officeaddins/samples/outlook-add-in-hello-world-run" />
 </body>
+
+<script>
+
+    Office.onReady((info) => {
+        if (info.host === Office.HostType.Outlook) {
+            document.getElementById("helloButton").onclick = sayHello;
+        }
+    });
+
+    /**
+     * Writes 'Hello world!' to a new message body.
+     */
+    function sayHello() {
+        Office.context.mailbox.item.body.setAsync(
+            "Hello world!",
+            {
+                coercionType: "html", // Write text as HTML
+            },
+
+            // Callback method to check that setAsync succeeded
+            function (asyncResult) {
+                if (asyncResult.status ==
+                    Office.AsyncResultStatus.Failed) {
+                    write(asyncResult.error.message);
+                }
+            }
+        );
+    }
+
+</script>
+
 </html>
